@@ -1,2 +1,2 @@
 # ps
-imdigo's problem solving by Java repository
+Problem Solving Repository

@@ -98,6 +98,9 @@ int main() {
     int now;
     int tmpIdx;
     while (!isAllVisited(graph)) {
+        if (graph[V - 1].adjacent.size() == 0) {
+            break ;
+        }
         now = q.front();
         q.pop();
         graph[now - 1].sortAdjacent();

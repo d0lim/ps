@@ -8,20 +8,8 @@ using namespace std;
 
 int arr[26][26];
 
-// int flatten(int N, int x, int y) {
-//     return (N * x + y);
-// }
-
-// int parseX(int N, int flat) {
-//     return (flat / N);
-// }
-
-// int parseY(int N, int flat) {
-//     return (flat % N);
-// }
 
 int bfs(int N, int start_x, int start_y) {
-    // cout << "BFS started!" << endl;
     int count = 0;
     queue<pair<int, int>> q;
     q.push(pair<int, int>(start_x, start_y));
@@ -30,7 +18,6 @@ int bfs(int N, int start_x, int start_y) {
         int x = q.front().first;
         int y = q.front().second;
         q.pop();
-        // cout << "Visited [" << x << "][" << y << "]\n";
         count++;
         if (arr[x - 1][y] == 1) {
             q.push(pair<int, int>(x - 1, y));
@@ -65,13 +52,7 @@ int main() {
             arr[i][j + 1] = line[j] - '0';
         }
     }
-    // cout << "Input ended" << endl;
-    // for (int i = 1; i <= N; i++) {
-    //     for (int j = 1; j <= N; j++) {
-    //         cout << arr[i][j];
-    //     }
-    //     cout << endl;
-    // }
+
     int complex = 0;
     vector<int> countInComplex;
     for (int i = 1; i <= N; i++) {

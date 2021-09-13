@@ -2,4 +2,4 @@
 Problem Solving Repository
 
 ## Language
-C, Java, Go
+C, Java, Python, Go

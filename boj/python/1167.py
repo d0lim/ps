@@ -17,8 +17,7 @@ for _ in range(V):
     iter_count = len(connections) // 2
     for i in range(iter_count):
         vertices.setdefault(vertex, [])
-        vertices[vertex].append(connections[:2])
-        connections = connections[2:]
+        vertices[vertex].append([connections[i * 2], connections[i * 2 + 1]])
 
 
 def dfs(vertex, length, visited, vertices):

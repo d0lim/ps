@@ -1,59 +1,35 @@
 from collections import deque
+import sys
+import copy
 
-def print_field(field):
-    for row in field:
-        print(row)
 
-T = int(input())
-for i in range(T):
-    test_info = input().split()
-    M = int(test_info[0])
-    N = int(test_info[1])
-    K = int(test_info[2])
-    print('INFO', M, N, K)
-    field = [list([0] * N) for j in range(M)]
-    worm = [list([0] * N) for j in range(M)]
-    for j in range(K):
-        cabbage = input().split()
-        field[int(cabbage[0])][int(cabbage[1])] = 1
-    print("---------- Initial Field -----------")
-    print_field(field)
-    print("------------------------------------")
-    
+T = int(sys.stdin.readline().rstrip())
+for _ in range(T):
+    M, N, K = map(int, sys.stdin.readline().rstrip().split())
+    field = [[False for _ in range(N + 2)] for _ in range(M + 2)]
+    visited = copy.deepcopy(field)
+    direction = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+
+    for _ in range(K):
+        cabbage_row, cabbage_col = map(int, sys.stdin.readline().rstrip().split())
+        field[cabbage_row + 1][cabbage_col + 1] = True
+
     count = 0
-    for m in range(M):
-        for n in range(N):
-            if field[m][n] == 1:
-                if worm[m][n] == 0:
-                    worm_m = m
-                    worm_n = n
-                    worm[m][n] = 1
-                    # 상하좌우 BFS 탐색 시작
-                    q = deque()
-                    while True:
-                        if len(q) > 0:
-                            worm_m, worm_n = q.popleft()
-                        if worm_m < M - 1 and field[worm_m + 1][worm_n] == 1 and worm[worm_m + 1][worm_n] == 0:
-                            worm[worm_m + 1][worm_n] = 1
-                            q.append((worm_m + 1, worm_n))
-                        if worm_m > 0 and field[worm_m - 1][worm_n] == 1 and worm[worm_m - 1][worm_n] == 0:
-                            worm[worm_m - 1][worm_n] = 1
-                            q.append((worm_m - 1, worm_n))
-                        if worm_n < N - 1 and field[worm_m][worm_n + 1] == 1 and worm[worm_m][worm_n + 1] == 0:
-                            worm[worm_m][worm_n + 1] = 1
-                            q.append((worm_m, worm_n + 1))
-                        if worm_n > 0 and field[worm_m][worm_n - 1] == 1 and worm[worm_m][worm_n - 1] == 0:
-                            worm[worm_m][worm_n - 1] = 1
-                            q.append((worm_m, worm_n - 1))
-                        # print(q)
-                        if len(q) == 0:
-                            count += 1
-                            break
+    for m in range(1, M + 2):
+        for n in range(1, N + 2):
+            if field[m][n] == True and visited[m][n] == False:
+                q = deque()
+                q.append((m, n))
+                visited[m][n] = True
+                while len(q) > 0:
+                    row, col = q.popleft()
 
-    print("---------- After Field -------------")
-    print_field(field)
-    print("------------------------------------")
-    print("------------ After Worm ------------")
-    print_field(field)
-    print("------------------------------------")
-    print("COUNT:", count)
+                    # Check up, down, right, left
+                    for a, b in direction:
+                        if field[row + a][col + b] and not visited[row + a][col + b]:
+                            visited[row + a][col + b] = True
+                            q.append((row + a, col + b))
+
+                count += 1
+
+    print(count)

@@ -1,25 +1,29 @@
 import sys
+from collections import deque, defaultdict
 
 n = int(sys.stdin.readline().rstrip())
 m = int(sys.stdin.readline().rstrip())
 
-computers = [0] * (n + 1)
-computers[1] = 1
-
-link = []
-for _ in range(m):
-    link.append(tuple(sorted(map(int, (sys.stdin.readline().split())))))
-
-link = sorted(link, key=lambda e: e[0])
+network = defaultdict(list)
 
 for _ in range(m):
-    for l in link:
-        if computers[l[0]] == 1:
-            computers[l[1]] = 1
-        if computers[l[1]] == 1:
-            computers[l[0]] = 1
+    a, b = map(int, sys.stdin.readline().rstrip().split())
+    network[a].append(b)
+    network[b].append(a)
 
-print(computers.count(1) - 1)
+visited = [False] * (n + 1)
 
+q = deque()
+q.append(1)
+visited[1] = True
+count = 0
+while q:
+    current = q.popleft()
 
+    for next_computer in network[current]:
+        if not visited[next_computer]:
+            count += 1
+            visited[next_computer] = True
+            q.append(next_computer)
 
+print(count)

@@ -3,8 +3,7 @@ from collections import deque
 from time import sleep
 
 
-def bfs(s, start_row, start_col, size, acc):
-    global eaten
+def bfs(s, start_row, start_col, size, acc, eaten):
     directions = [(-1, 0), (1, 0), (0, 1), (0, -1)]
     q = deque()
     visited = [[False for _ in range(N + 2)] for _ in range(N + 2)]
@@ -65,7 +64,9 @@ result = 0
 baby_shark = 2
 acc = 0
 while True:
-    s_row, s_col, cnt, baby_shark, acc = bfs(space, s_row, s_col, baby_shark, acc)
+    s_row, s_col, cnt, baby_shark, acc = bfs(
+        space, s_row, s_col, baby_shark, acc, eaten
+    )
 
     result += cnt
 

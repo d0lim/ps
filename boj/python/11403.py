@@ -1,33 +1,34 @@
-from collections import deque
 import sys
+from collections import deque, defaultdict
 
 N = int(sys.stdin.readline().rstrip())
 
-vertices = [list(map(int, sys.stdin.readline().rstrip().split())) for _ in range(N)]
+G = defaultdict(list)
 
-adjacent = dict()
-for idx, vertex in enumerate(vertices):
-    adjacent.setdefault(idx, [])
-    for i, v in enumerate(vertex):
+for i in range(N):
+    adjacents = list(map(int, sys.stdin.readline().rstrip().split()))
+    for j, v in enumerate(adjacents):
         if v == 1:
-            adjacent[idx].append(i)
+            G[i].append(j)
 
+reachable = [[0 for _ in range(N)] for _ in range(N)]
 
-for key, adj_vertices in adjacent.items():
-    q = deque()
-    for adj_vertex in adj_vertices:
-        q.append(adj_vertex)
-    visited = [False for _ in range(N)]
-    visited[key] = True
-    while len(q) > 0:
-        current_vertex = q.pop()
-        visited[current_vertex] = True
-        vertices[key][current_vertex] = 1
-        for next_vertex in adjacent[current_vertex]:
-            if not visited[next_vertex]:
-                q.append(next_vertex)
-            else:
-                vertices[key][next_vertex] = 1
+for i in range(N):
+    s = deque()
+    visited = [False] * N
 
-for l in vertices:
-    print(" ".join(map(str, l)))
+    # dfs
+    for adj in G[i]:
+        s.append(adj)
+
+    while s:
+        curr = s.pop()
+        reachable[i][curr] = 1
+        visited[curr] = True
+
+        for adj in G[curr]:
+            if not visited[adj]:
+                s.append(adj)
+
+for r in reachable:
+    print(" ".join(map(str, r)))

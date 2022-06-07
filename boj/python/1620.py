@@ -1,16 +1,14 @@
 import sys
-from collections import OrderedDict
 
+N, M = map(int, sys.stdin.readline().rstrip().split())
 
-N, M = map(int, (sys.stdin.readline().split()))
+dogam = {}
 
-dic = OrderedDict()
+for i in range(N):
+    pokemon = sys.stdin.readline().rstrip()
+    dogam[str(i + 1)] = pokemon
+    dogam[pokemon] = i + 1
 
-for i in range(1, N + 1):
-    info = sys.stdin.readline().rstrip('\n')
-    dic[info] = i
-    dic[str(i)] = info
-
-for i in range(M):
-    query = sys.stdin.readline().rstrip('\n')
-    print(dic[query])
+for _ in range(M):
+    query = sys.stdin.readline().rstrip()
+    print(dogam[query])

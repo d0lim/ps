@@ -51,6 +51,4 @@ img = []
 for _ in range(N):
     img.append(list(map(int, list(sys.stdin.readline().rstrip()))))
 
-s = probe(img)
-
 print(probe(img))

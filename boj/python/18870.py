@@ -15,6 +15,6 @@ for z in s:
         count += 1
     z.append(count)
 
-s = sorted(zipped, key=lambda e: e[0])
+ss = sorted(s, key=lambda e: e[0])
 
-print(" ".join(map(lambda e: str(e[2]), s)))
+print(" ".join(map(lambda e: str(e[2]), ss)))

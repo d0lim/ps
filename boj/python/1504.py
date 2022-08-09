@@ -3,7 +3,7 @@ from collections import deque, defaultdict
 import heapq
 
 
-def dajikstra(n, start, end, adj):
+def dijkstra(n, start, end, adj):
     heap = []
     res = [float("inf")] * (n + 1)
 
@@ -36,12 +36,12 @@ for _ in range(E):
 v1, v2 = map(int, sys.stdin.readline().rstrip().split())
 
 res = min(
-    dajikstra(N, 1, v1, adjacency)
-    + dajikstra(N, v1, v2, adjacency)
-    + dajikstra(N, v2, N, adjacency),
-    dajikstra(N, 1, v2, adjacency)
-    + dajikstra(N, v2, v1, adjacency)
-    + dajikstra(N, v1, N, adjacency),
+    dijkstra(N, 1, v1, adjacency)
+    + dijkstra(N, v1, v2, adjacency)
+    + dijkstra(N, v2, N, adjacency),
+    dijkstra(N, 1, v2, adjacency)
+    + dijkstra(N, v2, v1, adjacency)
+    + dijkstra(N, v1, N, adjacency),
 )
 
 print(res if res < float("inf") else -1)

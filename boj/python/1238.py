@@ -3,7 +3,7 @@ from collections import defaultdict, deque
 import heapq
 
 
-def dajikstra(n, start, end, adjacency_info):
+def dijkstra(n, start, end, adjacency_info):
     heap = []
     result = [float("inf")] * (n + 1)
     result[start] = 0
@@ -37,8 +37,8 @@ for _ in range(M):
 res = 0
 # dajikstra loop
 for i in range(1, N + 1):
-    go_to = dajikstra(N, i, X, road)
-    come_back = dajikstra(N, X, i, road)
+    go_to = dijkstra(N, i, X, road)
+    come_back = dijkstra(N, X, i, road)
     if res < go_to + come_back:
         res = go_to + come_back
 

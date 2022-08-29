@@ -1,4 +1,5 @@
 from collections import deque
+import sys
 
 
 def bfs(start):
@@ -19,7 +20,7 @@ def bfs(start):
 N = int(input())
 tree = [[] for _ in range(N + 1)]
 for _ in range(N - 1):
-    start, end, weight = map(int, input().split())
+    start, end, weight = map(int, sys.stdin.readline().split())
     tree[start].append([end, weight])
     tree[end].append([start, weight])
 print(bfs(bfs(1)[0])[1])

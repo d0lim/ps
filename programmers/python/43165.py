@@ -1,20 +1,23 @@
 import math
 
-def solution(numbers, target):
-    length = 2 ** (len(numbers) + 1)
-    graph = [0] * length
+answer = 0
 
-    for i in range(2, length):
-        parent = i // 2
-        # 짝
-        if i % 2 == 0:
-            graph[i] = graph[parent] + numbers[int(math.log(i, 2)) - 1]
-        # 홀
-        else:
-            graph[i] = graph[parent] - numbers[int(math.log(i, 2)) - 1]
-    
-    result = graph[length // 2:]
-    
-    return result.count(target)
+
+def dfs(numbers, i, acc, target):
+    global answer
+    if i == len(numbers):
+        if acc == target:
+            answer += 1
+        return
+
+    dfs(numbers, i + 1, acc + numbers[i], target)
+    dfs(numbers, i + 1, acc - numbers[i], target)
+
+
+def solution(numbers, target):
+    global answer
+    dfs(numbers, 0, 0, target)
+    return answer
+
 
 print(solution([1, 1, 1, 1, 1], 3))

@@ -62,3 +62,6 @@ ps\.iml
 *.exe
 *.out
 *.app
+
+/kakao/2022-junior
+/line/2022
